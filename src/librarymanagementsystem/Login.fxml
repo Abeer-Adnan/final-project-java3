@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <AnchorPane prefHeight="562.0" prefWidth="348.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="562.0" prefWidth="381.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="562.0" fitWidth="350.0" layoutY="-1.0">
+            <ImageView fitHeight="562.0" fitWidth="381.0" layoutY="-1.0">
                <image>
-                  <Image url="@../../../../../Desktop/library.jpg" />
+                  <Image url="@library.jpg" />
                </image>
             </ImageView>
-            <FontAwesomeIconView fill="#390303" glyphName="BOOK" layoutX="128.0" layoutY="300.0" size="80" />
-            <Text layoutX="77.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Mangment">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
          </children>
       </AnchorPane>
    </left>
-   <right>
-      <AnchorPane prefHeight="562.0" prefWidth="385.0" BorderPane.alignment="CENTER">
+   <center>
+      <AnchorPane centerShape="false" prefHeight="562.0" prefWidth="405.0" style="-fx-background-color: #E9E9E9;" BorderPane.alignment="CENTER">
          <children>
-            <TextField layoutX="129.0" layoutY="202.0" promptText="User Name" style="-fx-background-color: transparent; -fx-border-color: #0568ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField layoutX="129.0" layoutY="259.0" promptText="Pass Word" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <FontAwesomeIconView fill="#350fcd" glyphName="USER" layoutX="119.0" layoutY="219.0" />
-            <FontAwesomeIconView fill="#3f15e8" glyphName="KEY" layoutX="118.0" layoutY="276.0" />
-            <Button layoutX="167.0" layoutY="336.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="57.0" style="-fx-background-color: #0568ff;" text="Login" />
-            <Hyperlink layoutX="139.0" layoutY="510.0" text="Forget your password?" />
-            <FontAwesomeIconView fill="#3f08b5" glyphName="USERS" layoutX="181.0" layoutY="112.0" size="35" />
-            <Text fill="#181f9e" layoutX="147.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login">
+            <FontAwesomeIconView fill="#581c0c" glyphName="USER" layoutX="104.0" layoutY="267.0" text="" />
+            <FontAwesomeIconView fill="#581c0c" glyphName="KEY" layoutX="103.0" layoutY="322.0" text="" />
+            <Button layoutX="150.0" layoutY="370.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="92.0" style="-fx-background-color: #4e342e; -fx-background-radius: 10;" text="Login" textFill="#e9e9e9" />
+            <Hyperlink layoutX="131.0" layoutY="510.0" style="-fx-text-fill: #bb3b0e;" text="Forget your password?" />
+            <FontAwesomeIconView fill="#4e342e" glyphName="USER" layoutX="170.0" layoutY="169.0" size="55" />
+            <Button layoutX="363.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
+            <Label alignment="CENTER" layoutX="41.0" layoutY="8.0" prefHeight="77.0" prefWidth="311.0" style="-fx-focus-traversable: #2365dd;" text="Library Mangment" textFill="#565d47">
+               <font>
+                  <Font name="Goudy Old Style Italic" size="38.0" />
+               </font>
+            </Label>
+            <Label layoutX="137.0" layoutY="185.0" prefHeight="44.0" prefWidth="119.0" text="User Login" textFill="#bb3b0e">
                <font>
                   <Font size="24.0" />
                </font>
-            </Text>
-            <Button layoutX="363.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
-            <FontAwesomeIconView fill="#0d04b9" glyphName="CLOSE" layoutX="364.0" layoutY="20.0" size="18" />
+            </Label>
+            <JFXTextField focusColor="#ca5116" layoutX="104.0" layoutY="249.0" prefHeight="25.0" prefWidth="201.0" promptText="    Username" unFocusColor="#581c0c">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </JFXTextField>
+            <JFXPasswordField focusColor="#ca5116" layoutX="103.0" layoutY="304.0" prefHeight="25.0" prefWidth="203.0" promptText="     Password" unFocusColor="#581c0c">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </JFXPasswordField>
          </children></AnchorPane>
-   </right>
+   </center>
 </BorderPane>

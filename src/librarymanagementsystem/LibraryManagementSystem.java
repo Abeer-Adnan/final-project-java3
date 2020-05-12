@@ -29,11 +29,13 @@ public class LibraryManagementSystem extends Application{
         Pane paneTableView = FXMLLoader.load(getClass().getResource("Login.fxml"));
         Map<String,Pane>mapPanes=new TreeMap<>(); 
         mapPanes.put("doctors", paneTableView);
-       
+       Pane pane = FXMLLoader.load(getClass().getResource("Buttons.fxml"));
+        Map<String,Pane>Panes=new TreeMap<>(); 
+        mapPanes.put("s2", pane);
         
-        Scene scene = new Scene(mapPanes.get("doctors"));
-        
-        primaryStage.setTitle("Hospital App");
+        //Scene scene = new Scene(mapPanes.get("doctors"));
+         Scene scene = new Scene(mapPanes.get("s2"));
+        primaryStage.setTitle("Liprary App");
         primaryStage.setScene(scene);
         primaryStage.show();   
     }

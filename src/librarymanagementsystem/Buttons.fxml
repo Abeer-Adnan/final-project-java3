@@ -8,33 +8,47 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="756.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="562.0" fitWidth="757.0">
          <image>
             <Image url="@button.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="277.0" layoutY="94.0" prefHeight="63.0" prefWidth="220.0" text="Select Opartion ">
+      <Label layoutX="217.0" layoutY="76.0" prefHeight="80.0" prefWidth="354.0" text="Select Opartion " textFill="#800202">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Felix Titling" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="204.0" layoutY="242.0" mnemonicParsing="false">
+      <Button layoutX="201.0" layoutY="194.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
          <graphic>
-            <FontAwesomeIconView glyphName="BOOK" />
+            <FontAwesomeIconView fill="#bf360c" glyphName="BOOK" size="79" text="" wrappingWidth="80.0" />
          </graphic>
       </Button>
-      <Button layoutX="445.0" layoutY="242.0" mnemonicParsing="false">
+      <Button layoutX="456.0" layoutY="194.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="16.0" style="-fx-background-color: transparent;">
          <graphic>
-            <FontAwesomeIconView glyphName="USERS" />
+            <FontAwesomeIconView fill="#bf360c" glyphName="USERS" size="75" text="" />
          </graphic>
       </Button>
-      <Button layoutX="341.0" layoutY="339.0" mnemonicParsing="false">
+      <Button layoutX="327.0" layoutY="322.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
          <graphic>
-            <FontAwesomeIconView glyphName="MUINTE" size="30" />
+            <FontAwesomeIconView fill="#bf360c" glyphName="EDIT" size="79" text="" />
          </graphic>
       </Button>
+      <Label layoutX="270.0" layoutY="417.0" prefHeight="25.0" prefWidth="209.0" text="Management borrower book" textFill="#565d47">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="164.0" layoutY="293.0" prefHeight="25.0" prefWidth="171.0" text="Management Books " textFill="#565d47">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="423.0" layoutY="293.0" prefHeight="25.0" prefWidth="179.0" text="Management Borrowers" textFill="#565d47">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

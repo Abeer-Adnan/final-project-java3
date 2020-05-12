@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="562.0" fitWidth="756.0">
+         <image>
+            <Image url="@bookk.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="116.0" layoutY="14.0" text="Management Borrowers" textFill="#3e2723">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <TableView layoutX="1.0" layoutY="326.0" prefHeight="237.0" prefWidth="756.0" style="-fx-background-color: f1d1d1; visibility: false;">
+        <columns>
+          <TableColumn prefWidth="72.0" style="-fx-background-color: f1d1d1;" text="ID" />
+          <TableColumn prefWidth="92.0" style="-fx-background-color: f1d1d1;" text="First Name" />
+            <TableColumn prefWidth="87.0" style="-fx-background-color: f1d1d1;" text="Last Name" />
+            <TableColumn prefWidth="112.0" style="-fx-background-color: f1d1d1;" text="Mobile" />
+            <TableColumn prefWidth="180.0" style="-fx-background-color: f1d1d1;" text="Email" />
+            <TableColumn prefWidth="139.0" style="-fx-background-color: f1d1d1;" text="Address" />
+            <TableColumn prefWidth="73.0" style="-fx-background-color: f1d1d1;" text="Gender" />
+        </columns>
+      </TableView>
+      <AnchorPane layoutX="1.0" layoutY="93.0" prefHeight="230.0" prefWidth="501.0">
+         <children>
+            <JFXTextField layoutX="26.0" layoutY="26.0" prefHeight="25.0" prefWidth="136.0" promptText="    ID" />
+            <JFXTextField layoutX="177.0" layoutY="26.0" prefHeight="25.0" prefWidth="149.0" promptText="    First Name" />
+            <JFXTextField layoutX="26.0" layoutY="90.0" prefHeight="25.0" prefWidth="171.0" promptText="   Mobile" />
+            <JFXTextField layoutX="348.0" layoutY="26.0" prefHeight="25.0" prefWidth="149.0" promptText="     Last Name" />
+            <JFXTextField layoutX="239.0" layoutY="90.0" prefHeight="25.0" prefWidth="235.0" promptText="Email" />
+            <JFXTextField layoutX="26.0" layoutY="160.0" prefHeight="25.0" prefWidth="171.0" promptText="Address" />
+            <RadioButton layoutX="251.0" layoutY="176.0" mnemonicParsing="false" text="Male" textFill="#3e2723">
+               <toggleGroup>
+                  <ToggleGroup fx:id="gender" />
+               </toggleGroup>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </RadioButton>
+            <RadioButton layoutX="356.0" layoutY="176.0" mnemonicParsing="false" text="Female" textFill="#3e2723" toggleGroup="$gender">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </RadioButton>
+            <Label layoutX="251.0" layoutY="151.0" prefHeight="17.0" prefWidth="73.0" text="Gender" textFill="#3e2723">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="8.0" layoutY="43.0" size="15" />
+            <FontAwesomeIconView glyphName="EDIT" layoutX="217.0" layoutY="107.0" size="15" />
+            <FontAwesomeIconView glyphName="COPY" layoutX="333.0" layoutY="42.0" size="15" />
+            <FontAwesomeIconView glyphName="PHONE" layoutX="9.0" layoutY="107.0" size="15" />
+            <FontAwesomeIconView glyphName="HOME" layoutX="8.0" layoutY="181.0" size="15" />
+            <FontAwesomeIconView glyphName="FEMALE" layoutX="433.0" layoutY="191.0" size="15" />
+            <FontAwesomeIconView glyphName="MALE" layoutX="312.0" layoutY="193.0" size="15" text="" />
+            <FontAwesomeIconView glyphName="COPY" layoutX="162.0" layoutY="42.0" size="15" />
+         </children>
+      </AnchorPane>
+      <JFXButton buttonType="RAISED" layoutX="533.0" layoutY="101.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="ADD" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="671.0" layoutY="101.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="VIEW" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="671.0" layoutY="201.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="UPDATE" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="533.0" layoutY="201.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="CLEAR" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="641.0" layoutY="151.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="DELETE" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="563.0" layoutY="151.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="SEARCH" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="700.0" prefHeight="34.0" prefWidth="56.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="BACK" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

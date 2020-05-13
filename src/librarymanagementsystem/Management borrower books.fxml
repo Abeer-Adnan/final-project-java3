@@ -11,29 +11,28 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="756.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="562.0" fitWidth="756.0" layoutX="1.0">
          <image>
             <Image url="@bookk.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="101.0" layoutY="14.0" text="Management borrower books ">
+      <Label layoutX="101.0" layoutY="14.0" text="Management borrower books " textFill="#3e2723">
          <font>
             <Font size="43.0" />
          </font>
       </Label>
       <AnchorPane layoutX="27.0" layoutY="113.0" prefHeight="301.0" prefWidth="211.0">
          <children>
-            <JFXTextField layoutX="31.0" layoutY="28.0" prefHeight="25.0" prefWidth="156.0" promptText="Book ID" />
-            <JFXTextField layoutX="31.0" layoutY="81.0" prefHeight="25.0" prefWidth="156.0" promptText="Borrower ID" />
-            <JFXTextField layoutX="31.0" layoutY="138.0" prefHeight="25.0" prefWidth="156.0" promptText="Borrowers Date" />
-            <JFXTextField layoutX="31.0" layoutY="200.0" prefHeight="25.0" prefWidth="156.0" promptText="Return Date" />
-            <FontAwesomeIconView glyphName="BOOK" layoutX="13.0" layoutY="48.0" size="20" />
-            <FontAwesomeIconView glyphName="USER" layoutX="13.0" layoutY="100.0" size="20" />
-            <FontAwesomeIconView glyphName="REFRESH" layoutX="13.0" layoutY="219.0" size="20" />
-            <FontAwesomeIconView glyphName="BELL" layoutX="12.0" layoutY="157.0" size="20" />
+            <JFXTextField layoutX="31.0" layoutY="28.0" prefHeight="25.0" prefWidth="176.0" promptText="Book ID" />
+            <JFXTextField layoutX="31.0" layoutY="81.0" prefHeight="25.0" prefWidth="176.0" promptText="Borrower ID" />
+            <JFXTextField layoutX="31.0" layoutY="138.0" prefHeight="25.0" prefWidth="176.0" promptText="Borrowers Date" />
+            <JFXTextField layoutX="31.0" layoutY="200.0" prefHeight="25.0" prefWidth="176.0" promptText="Return Date" />
+            <FontAwesomeIconView fill="#3e2723" glyphName="BOOK" layoutX="13.0" layoutY="48.0" size="20" />
+            <FontAwesomeIconView fill="#3e2723" glyphName="USER" layoutX="13.0" layoutY="100.0" size="20" />
+            <FontAwesomeIconView fill="#3e2723" glyphName="REFRESH" layoutX="13.0" layoutY="219.0" size="20" />
+            <FontAwesomeIconView fill="#3e2723" glyphName="BELL" layoutX="12.0" layoutY="157.0" size="20" />
          </children>
       </AnchorPane>
       <JFXButton buttonType="RAISED" layoutX="115.0" layoutY="482.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="CLEAR" textFill="#3e2723">

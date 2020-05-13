@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagementsystem.ManagementBooksController">
    <children>
       <ImageView fitHeight="562.0" fitWidth="756.0" layoutX="1.0" layoutY="1.0">
          <image>
@@ -21,17 +21,17 @@
       </ImageView>
       <AnchorPane layoutX="28.0" layoutY="102.0" prefHeight="311.0" prefWidth="318.0">
          <children>
-            <JFXTextField layoutX="57.0" layoutY="49.0" prefHeight="44.0" prefWidth="205.0" promptText="      ID">
+            <JFXTextField fx:id="textfeildID" layoutX="57.0" layoutY="49.0" prefHeight="44.0" prefWidth="205.0" promptText="      ID">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextField layoutX="57.0" layoutY="131.0" prefHeight="44.0" prefWidth="205.0" promptText="     Name">
+            <JFXTextField fx:id="textfeildName" layoutX="57.0" layoutY="131.0" prefHeight="44.0" prefWidth="205.0" promptText="     Name">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextArea layoutX="55.0" layoutY="191.0" prefHeight="77.0" prefWidth="213.0" promptText="                                                                                                                 Desciption">
+            <JFXTextArea fx:id="textfeildDescription" layoutX="55.0" layoutY="191.0" prefHeight="77.0" prefWidth="213.0" promptText="                                                                                                                 Description">
                <font>
                   <Font size="14.0" />
                </font>
@@ -46,44 +46,44 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <TableView layoutX="381.0" layoutY="105.0" prefHeight="311.0" prefWidth="370.0" style="visibility: true; -fx-background-color: f1d1d1;">
+      <TableView fx:id="tabelviewBook" layoutX="381.0" layoutY="105.0" prefHeight="311.0" prefWidth="370.0" style="visibility: false; -fx-background-color: f1d1d1;">
         <columns>
-          <TableColumn prefWidth="84.0" style="-fx-background-color: f1d1d1;" text="ID" />
-          <TableColumn prefWidth="98.0" style="-fx-background-color: f1d1d1;" text="Name" />
-            <TableColumn prefWidth="187.0" style="-fx-background-color: f1d1d1;" text="Descreption" />
+          <TableColumn fx:id="tcID" prefWidth="84.0" style="-fx-background-color: f1d1d1;" text="ID" />
+          <TableColumn fx:id="tcName" prefWidth="98.0" style="-fx-background-color: f1d1d1;" text="Name" />
+            <TableColumn fx:id="tcDescription" prefWidth="187.0" style="-fx-background-color: f1d1d1;" text="Descreption" />
         </columns>
       </TableView>
-      <JFXButton buttonType="RAISED" layoutX="49.0" layoutY="436.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="ADD" textFill="#3e2723">
+      <JFXButton fx:id="bttnAdd" buttonType="RAISED" layoutX="49.0" layoutY="436.0" onAction="#bttnAddHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="ADD" textFill="#3e2723">
          <font>
             <Font name="Gadugi Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="685.0" layoutY="531.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="BACK" textFill="#3e2723">
+      <JFXButton fx:id="bttnBack" buttonType="RAISED" layoutX="685.0" layoutY="531.0" onAction="#bttnBackHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="BACK" textFill="#3e2723">
          <font>
             <Font name="Gadugi Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="256.0" layoutY="487.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="UPDATE" textFill="#3e2723">
+      <JFXButton fx:id="bttnUpdate" buttonType="RAISED" layoutX="256.0" layoutY="487.0" onAction="#bttnUpdateHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="UPDATE" textFill="#3e2723">
          <font>
             <Font name="Gadugi Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="256.0" layoutY="436.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="SEARCH" textFill="#3e2723">
+      <JFXButton fx:id="bttnSearch" buttonType="RAISED" layoutX="256.0" layoutY="436.0" onAction="#bttnSearchHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="SEARCH" textFill="#3e2723">
          <font>
             <Font name="Gadugi Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="151.0" layoutY="487.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="CLEAR" textFill="#3e2723">
+      <JFXButton fx:id="bttnClear" alignment="CENTER" buttonType="RAISED" layoutX="151.0" layoutY="487.0" onAction="#bttnClearHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="CLEAR" textFill="#3e2723">
          <font>
             <Font name="Gadugi Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="49.0" layoutY="487.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="DELETE" textFill="#3e2723">
+      <JFXButton fx:id="bttnDelete" buttonType="RAISED" layoutX="49.0" layoutY="487.0" onAction="#bttnDeleteHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="DELETE" textFill="#3e2723">
          <font>
             <Font name="Gadugi Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="151.0" layoutY="436.0" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="VIEW" textFill="#3e2723">
+      <JFXButton fx:id="bttnView" buttonType="RAISED" layoutX="151.0" layoutY="436.0" onAction="#bttnViewHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="VIEW" textFill="#3e2723">
          <font>
             <Font name="Gadugi Bold" size="12.0" />
          </font>

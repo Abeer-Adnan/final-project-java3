@@ -26,15 +26,13 @@ public class LibraryManagementSystem extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Pane paneTableView = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Pane paneTableView = FXMLLoader.load(getClass().getResource("Buttons.fxml"));
         Map<String,Pane>mapPanes=new TreeMap<>(); 
         mapPanes.put("doctors", paneTableView);
-       Pane pane = FXMLLoader.load(getClass().getResource("Buttons.fxml"));
-        Map<String,Pane>Panes=new TreeMap<>(); 
-        mapPanes.put("s2", pane);
+      
         
-        //Scene scene = new Scene(mapPanes.get("doctors"));
-         Scene scene = new Scene(mapPanes.get("s2"));
+        Scene scene = new Scene(mapPanes.get("doctors"));
+        
         primaryStage.setTitle("Liprary App");
         primaryStage.setScene(scene);
         primaryStage.show();   

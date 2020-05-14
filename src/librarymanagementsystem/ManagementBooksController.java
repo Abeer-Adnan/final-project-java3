@@ -86,7 +86,7 @@ public class ManagementBooksController implements Initializable {
        
         tabelviewBook.getSelectionModel().selectedItemProperty().addListener(
                 event-> viewSelectedBooks() );
-        tabelviewBook.setVisible(true);
+        
     }    
      private void viewSelectedBooks() {
          tabelviewBook.setVisible(true);
@@ -109,7 +109,7 @@ public class ManagementBooksController implements Initializable {
         String sql = "Insert Into books values(" + Id + ",'" + Name + "','"
                 + Description + "')";
         this.statement.executeUpdate(sql);
-        tabelviewBook.setVisible(true);
+        
     }
 
     @FXML
@@ -127,13 +127,13 @@ public class ManagementBooksController implements Initializable {
 
     @FXML
     private void bttnUpdateHandle(ActionEvent event)throws Exception{
+
         Integer Id = Integer.parseInt(textfeildID.getText());
         String Name = textfeildName.getText();
         String Description = textfeildDescription.getText();
         String sql = "Update books Set Name='" + Name + "',Description='"
                 + Description + "'Where Id=" + Id;
         this.statement.executeUpdate(sql);
-        tabelviewBook.setVisible(true);
     }
 
     @FXML
@@ -156,11 +156,12 @@ public class ManagementBooksController implements Initializable {
         String Description = textfeildDescription.getText();
         String sql = "Delete From books Where Id=" + Id;
         this.statement.executeUpdate(sql);
-        tabelviewBook.setVisible(true);
+        
     }
 
     @FXML
     private void bttnViewHandle(ActionEvent event)throws Exception{
+        tabelviewBook.setVisible(true);
          ResultSet resultset = this.statement.executeQuery("Select * From books");
         tabelviewBook.getItems().clear();
         while (resultset.next()) {
@@ -169,7 +170,7 @@ public class ManagementBooksController implements Initializable {
             book.setName(resultset.getString("Name"));
             book.setDescription(resultset.getString("Description"));
             tabelviewBook.getItems().add(book);
-            tabelviewBook.setVisible(true);
+            
             
         }
         

@@ -63,6 +63,8 @@ public class ButtonsController implements Initializable {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+           
+            
         }
     }
 

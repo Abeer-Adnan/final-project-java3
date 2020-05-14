@@ -25,7 +25,7 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <TableView fx:id="tableviewborrowers" layoutX="9.0" layoutY="326.0" prefHeight="230.0" prefWidth="739.0" style="-fx-background-color: f1d1d1; visibility: false;">
+      <TableView fx:id="tableview" layoutX="9.0" layoutY="326.0" prefHeight="230.0" prefWidth="739.0" style="-fx-background-color: f1d1d1; visibility: false;">
         <columns>
           <TableColumn fx:id="tcID" prefWidth="72.0" style="-fx-background-color: f1d1d1;" text="ID" />
           <TableColumn fx:id="tcFirstName" prefWidth="92.0" style="-fx-background-color: f1d1d1;" text="First Name" />

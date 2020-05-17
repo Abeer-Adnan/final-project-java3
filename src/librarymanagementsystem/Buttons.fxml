@@ -15,7 +15,7 @@
             <Image url="@button.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="217.0" layoutY="76.0" prefHeight="80.0" prefWidth="354.0" text="Select Opartion " textFill="#800202">
+      <Label layoutX="217.0" layoutY="76.0" prefHeight="80.0" prefWidth="354.0" text="Select Operation" textFill="#800202">
          <font>
             <Font name="Felix Titling" size="36.0" />
          </font>
@@ -49,6 +49,11 @@
          <graphic>
             <FontAwesomeIconView fill="#bf360c" glyphName="BOOK" size="79" text="" wrappingWidth="80.0" />
          </graphic>
+      </JFXButton>
+      <JFXButton fx:id="bttnExit" buttonType="RAISED" layoutX="679.0" layoutY="522.0" onAction="#bttnExitHandle" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #fa9191; -fx-background-radius: 5;" text="EXIT" textFill="#3e2723">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font>
       </JFXButton>
    </children>
 </AnchorPane>

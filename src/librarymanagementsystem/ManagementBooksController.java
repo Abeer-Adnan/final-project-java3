@@ -12,7 +12,9 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +22,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -61,7 +65,9 @@ public class ManagementBooksController implements Initializable {
     private JFXButton bttnDelete;
     @FXML
     private JFXButton bttnView;
+    
     Statement statement;
+    Alert alert;
 
     /**
      * Initializes the controller class.
@@ -92,6 +98,7 @@ public class ManagementBooksController implements Initializable {
          tabelviewBook.setVisible(true);
         books book = tabelviewBook.getSelectionModel().getSelectedItem();
         if (book != null) {
+            tabelviewBook.setVisible(true);
             textfeildID.setText(String.valueOf(book.getId()));
             textfeildName.setText(book.getName());
             textfeildDescription.setText(book.getDescription());
@@ -103,13 +110,47 @@ public class ManagementBooksController implements Initializable {
 
     @FXML
     private void bttnAddHandle(ActionEvent event) throws Exception{
+        try{
         Integer Id = Integer.parseInt(textfeildID.getText());
         String Name = textfeildName.getText();
         String Description = textfeildDescription.getText();
+//        if(Id==null||Name==null||Description==null){
+//             throw new AgrumentException("Empty values are not allowed.", "value");
+//
+//        }
+             Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add ?").showAndWait();
+                if (ButtonType.OK == confirm.get()){
+    
+
+//        alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add ?", ButtonType.YES);
+//        alert.setHeaderText("Confirmation alert !");
+//        alert.show();
+        
+        
         String sql = "Insert Into books values(" + Id + ",'" + Name + "','"
                 + Description + "')";
         this.statement.executeUpdate(sql);
         
+        alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
+         alert.setHeaderText("Great!");  
+        alert.show();
+                 //   bttnViewHandle(event);
+}else{
+     alert = new Alert(Alert.AlertType.INFORMATION, "Add operation is faild", ButtonType.CANCEL);
+         alert.setHeaderText("Sorry!");  
+        alert.show();
+}
+        }catch(NumberFormatException e){
+            alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type before pressing the Add button", ButtonType.OK);
+          alert.show();
+          }
+          
+        catch(Exception e ){
+             alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
+          alert.show();
+        
+        } 
+
     }
 
     @FXML
@@ -127,17 +168,82 @@ public class ManagementBooksController implements Initializable {
 
     @FXML
     private void bttnUpdateHandle(ActionEvent event)throws Exception{
-
+        try{
+//            alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Update ?", ButtonType.YES);
+//            alert.setHeaderText("Confirmation alert !");
+//            alert.show();
+          
         Integer Id = Integer.parseInt(textfeildID.getText());
         String Name = textfeildName.getText();
         String Description = textfeildDescription.getText();
+          Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Update ?").showAndWait();
+                if (ButtonType.OK == confirm.get()){
         String sql = "Update books Set Name='" + Name + "',Description='"
                 + Description + "'Where Id=" + Id;
         this.statement.executeUpdate(sql);
+        
+        alert = new Alert(Alert.AlertType.INFORMATION, "Update operation completed successfully", ButtonType.CANCEL);
+         alert.setHeaderText("Great!");  
+        alert.show();
+        
+                }else{
+                    alert = new Alert(Alert.AlertType.INFORMATION, "Update operation is faild", ButtonType.CANCEL);
+         alert.setHeaderText("Sorry!");  
+        alert.show();
+                }
+                
+        }catch(NumberFormatException e){
+          alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type or choose the record that you want to update from the table before pressing the update button", ButtonType.OK);
+          alert.show();
+          
+          
+        }catch(Exception e){
+          alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
+          alert.show();
+        }
     }
 
     @FXML
-    private void bttnSearchHandle(ActionEvent event) {
+    private void bttnSearchHandle(ActionEvent event) throws Exception {
+//        alert = new Alert(Alert.AlertType.INFORMATION, "Enter the id book that you want to seach it ", ButtonType.OK);
+//        alert.show();
+//        Integer Id = Integer.parseInt(textfeildID.getText());
+//        //String sql ="Select * From books Where Id=" + Id;
+//        //this.statement.executeQuery(sql);
+//        ResultSet resultset = this.statement.executeQuery("Select * From books Where Id=" + Id);
+//        if(!resultset.equals(Id)){
+//            alert = new Alert(Alert.AlertType.INFORMATION, "Not found", ButtonType.OK);
+//        alert.show();
+//            
+//        }else{
+//             alert = new Alert(Alert.AlertType.INFORMATION, "found", ButtonType.OK);
+//        alert.show(); 
+//        }
+            try{
+              alert = new Alert(Alert.AlertType.INFORMATION, "Enter the id book that you want to seach it ", ButtonType.OK);
+              alert.show();
+         
+         Integer Id = Integer.parseInt(textfeildID.getText());
+         ResultSet resultset = this.statement.executeQuery("Select * From books Where Id=" + Id);
+        tabelviewBook.getItems().clear();
+        while (resultset.next()) {
+            books book = new books();
+            book.setId(resultset.getInt("Id"));
+            book.setName(resultset.getString("Name"));
+            book.setDescription(resultset.getString("Description"));
+            tabelviewBook.getItems().addAll(book);
+            tabelviewBook.setVisible(true);
+        
+        }
+//            }catch(NumberFormatException e){
+//          alert = new Alert(Alert.AlertType.WARNING, "Enter valid id book that you want to seach it", ButtonType.OK);
+//          alert.show();
+            }catch(Exception e){
+                
+              alert = new Alert(Alert.AlertType.ERROR, "Enter valid id book that you want to seach it", ButtonType.PREVIOUS);
+              alert.setTitle("Somthing Error");
+              alert.show();
+            }
     }
 
     @FXML
@@ -151,11 +257,38 @@ public class ManagementBooksController implements Initializable {
 
     @FXML
     private void bttnDeleteHandle(ActionEvent event) throws Exception{
+         try{
+//            alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Delete ?", ButtonType.YES);
+//            alert.setHeaderText("Confirmation alert !");
+//            alert.show();
+
+            
         Integer Id = Integer.parseInt(textfeildID.getText());
         String Name = textfeildName.getText();
         String Description = textfeildDescription.getText();
+        Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Delete ?").showAndWait();
+                if (ButtonType.OK == confirm.get()){
         String sql = "Delete From books Where Id=" + Id;
         this.statement.executeUpdate(sql);
+        
+        alert = new Alert(Alert.AlertType.INFORMATION, "Delete operation completed successfully", ButtonType.CANCEL);
+         alert.setHeaderText("Great!");  
+        alert.show();
+                }else{
+                    alert = new Alert(Alert.AlertType.INFORMATION, "Delete operation is faild", ButtonType.CANCEL);
+         alert.setHeaderText("Sorry!");  
+        alert.show(); 
+                }
+        }catch(NumberFormatException e){
+         alert = new Alert(Alert.AlertType.WARNING,
+           "Enter valid data type or choose the record that you want to Delete from the table before pressing the Delete button", ButtonType.OK);
+          alert.show();
+          
+          
+        }catch(Exception e){
+          alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
+          alert.show();
+        }
         
     }
 

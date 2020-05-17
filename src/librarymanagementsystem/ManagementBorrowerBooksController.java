@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -57,8 +60,9 @@ public class ManagementBorrowerBooksController implements Initializable {
     private TableColumn<borrower_books, String> tcReturnDate;
     @FXML
     private JFXButton bttnBack;
+    
     Statement statement;
-
+    Alert alert;
     /**
      * Initializes the controller class.
      */
@@ -82,10 +86,10 @@ public class ManagementBorrowerBooksController implements Initializable {
         tcReturnDate.setCellValueFactory(new PropertyValueFactory("Return_date"));
         
         
-        tableviewborrbook.getSelectionModel().selectedItemProperty().addListener(
-                event-> viewSelectedBorrowerBook() );
+      /*  tableviewborrbook.getSelectionModel().selectedItemProperty().addListener(
+                event-> viewSelectedBorrowerBook() );*/
         
-    }    
+    } /*   
      private void viewSelectedBorrowerBook() {
          tableviewborrbook.setVisible(true);
         borrower_books borrowerbooks = tableviewborrbook.getSelectionModel().getSelectedItem();
@@ -96,7 +100,7 @@ public class ManagementBorrowerBooksController implements Initializable {
             textfeildreturnDate.setText(borrowerbooks.getReturn_date());
             
         }
-    }    
+    }*/    
 
     @FXML
     private void bttnClearHandle(ActionEvent event) {
@@ -110,14 +114,39 @@ public class ManagementBorrowerBooksController implements Initializable {
 
     @FXML
     private void bttnAddHandle(ActionEvent event)throws Exception{
+        try{
         Integer BookId = Integer.parseInt(textfeildbookId.getText());
         Integer BorrowerId = Integer.parseInt(textfeildborrowerId.getText());
         String BorrowersDate = textfeildborrowerDate.getText();
         String ReturnDate = textfeildreturnDate.getText();
+        
+        Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add ?").showAndWait();
+                if (ButtonType.OK == confirm.get()){
        
         String sql = "Insert Into borrower_books values(" + BookId + "," + BorrowerId + ",'"
                 + BorrowersDate+"','"+ReturnDate + "')";
         this.statement.executeUpdate(sql);
+        
+        
+        alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
+         alert.setHeaderText("Great!");  
+        alert.show();
+                 //   bttnViewHandle(event);
+}else{
+     alert = new Alert(Alert.AlertType.INFORMATION, "Add operation is faild", ButtonType.CANCEL);
+         alert.setHeaderText("Sorry!");  
+        alert.show();
+                }
+        }catch(NumberFormatException e){
+            alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type before pressing the Add button", ButtonType.OK);
+          alert.show();
+          }
+          
+        catch(Exception e ){
+             alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
+          alert.show();
+        
+        }
     }
 
     @FXML

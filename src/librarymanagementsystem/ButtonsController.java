@@ -30,6 +30,8 @@ public class ButtonsController implements Initializable {
     private Button bttnBorrowers;
     @FXML
     private Button bttnborrowerbook;
+    @FXML
+    private Button bttnExit;
 
     /**
      * Initializes the controller class.
@@ -79,6 +81,10 @@ public class ButtonsController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+      @FXML
+    void bttnExitHandle(ActionEvent event) {
+       System.exit(0);
     }
     
 }

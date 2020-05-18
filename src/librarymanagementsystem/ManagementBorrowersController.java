@@ -129,6 +129,7 @@ public class ManagementBorrowersController implements Initializable {
         
         try {
             p = new PrintWriter(new FileWriter(new File("src/librarymanagementsystem/out.txt"), true));
+            p.print("********************** \n");
         } catch (IOException ex) {
             Logger.getLogger(ManagementBorrowersController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -144,11 +145,8 @@ public class ManagementBorrowersController implements Initializable {
             textfeildMobile.setText(borrowers.getMobile());
             textfeildEmail.setText(borrowers.getEmail());
             textfeildAddress.setText(borrowers.getAddress());
-            // gender.selectToggle(borrowers.getGender());
-
             gender.setUserData(borrowers.getGender());
-//            System.out.println((borrowers.getGender()));
-//            System.out.println(gender.getUserData());
+            
             if (gender.getUserData().equals("Male")) {
                 bttnMale.setSelected(true);
             } else {
@@ -168,7 +166,7 @@ public class ManagementBorrowersController implements Initializable {
             String Mobile = textfeildMobile.getText();
             String Email = textfeildEmail.getText();
             String Address = textfeildAddress.getText();
-            String genderText="";
+            String genderText = "";
             if (bttnMale.isSelected()) {
                 genderText += bttnMale.getText();
             }
@@ -181,20 +179,22 @@ public class ManagementBorrowersController implements Initializable {
                 borrowers bb = new borrowers(Id, FirstName, LastName, Mobile, Email, Address, genderText);
                 List<borrowers> bblist = new ArrayList<>();
                 bblist.add(bb);
-                tableviewborrowers.getItems().setAll(tableviewborrowers.getItems().stream().sorted(Comparator.comparing(borrowers::getId).reversed())
-                        .sorted(new Comparator<borrowers>() {
-                            @Override
-                            public int compare(borrowers t, borrowers t1) {
-                                return -t.compareTo(t1);
-                            }
-                        })
-                        .collect(Collectors.toList()
-                        ));
+                tableviewborrowers.getItems().setAll(
+                        tableviewborrowers.getItems().stream().sorted(
+                                Comparator.comparing(borrowers::getId).reversed())
+                                .sorted(new Comparator<borrowers>() {
+                                    @Override
+                                    public int compare(borrowers t, borrowers t1) {
+                                        return -t.compareTo(t1);
+                                    }
+                                })
+                                .collect(Collectors.toList()
+                                ));
                 
                 String sql = "Insert Into borrowers values(" + Id + ",'" + FirstName + "','"
                         + LastName + "','" + Mobile + "','" + Email + "','" + Address + "','" + genderText + "')";
                 this.statement.executeUpdate(sql);
-                p.println("Added Borrower : " + new borrowers(Id, FirstName, LastName, Mobile, Email, Address, genderText));
+                p.println("Added Borrower : \n " + new borrowers(Id, FirstName, LastName, Mobile, Email, Address, genderText));
                 p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
@@ -232,6 +232,7 @@ public class ManagementBorrowersController implements Initializable {
             tableviewborrowers.getItems().add(borrowers);
             
         }
+        p.flush();
     }
     
     @FXML
@@ -250,14 +251,13 @@ public class ManagementBorrowersController implements Initializable {
             if (bttnFemale.isSelected()) {
                 gender += bttnFemale.getText();
             }
-            // String Gender = textfeild.getText();
             Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Update ?").showAndWait();
             if (ButtonType.OK == confirm.get()) {
                 String sql = "Update borrowers Set FirstName='" + FirstName + "',FirstName='"
                         + FirstName + "',LastName='" + LastName + "',Mobile='" + Mobile
                         + "',Email='" + Email + "',Address='" + Address + "',Gender='" + gender + "'Where Id=" + Id;
                 this.statement.executeUpdate(sql);
-                p.println(sql);
+                p.println("Update Borrower : \n" + new borrowers(Id, FirstName, LastName, Mobile, Email, Address, gender));
                 p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Update operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
@@ -301,7 +301,6 @@ public class ManagementBorrowersController implements Initializable {
             String Mobile = textfeildMobile.getText();
             String Email = textfeildEmail.getText();
             String Address = textfeildAddress.getText();
-            //String Gender = textfeild.getText();
             String gender = "";
             if (bttnMale.isSelected()) {
                 gender += bttnMale.getText();
@@ -313,6 +312,8 @@ public class ManagementBorrowersController implements Initializable {
             if (ButtonType.OK == confirm.get()) {
                 String sql = "Delete From borrowers Where Id=" + Id;
                 this.statement.executeUpdate(sql);
+                p.println("Deleted Borrower : \n" + new borrowers(Id, FirstName, LastName, Mobile, Email, Address, gender));
+                p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Delete operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
                 alert.show();
@@ -335,9 +336,7 @@ public class ManagementBorrowersController implements Initializable {
     @FXML
     private void bttnSearchHandle(ActionEvent event) {
         try {
-//              alert = new Alert(Alert.AlertType.INFORMATION, "Enter the id borrowers that you want to seach it ", ButtonType.OK);
-//              alert.show();
-
+            
             Integer Id = Integer.parseInt(textfeildID.getText());
             ResultSet resultset = this.statement.executeQuery("Select * From borrowers Where Id=" + Id);
             tableviewborrowers.getItems().clear();
@@ -350,13 +349,12 @@ public class ManagementBorrowersController implements Initializable {
                 borrowers.setEmail(resultset.getString("Email"));
                 borrowers.setAddress(resultset.getString("Address"));
                 borrowers.setGender(resultset.getString("Gender"));
-                tableviewborrowers.getItems().add(borrowers);
+                p.println("Search for the borrower with the Id :  " + Id);
+                p.flush();
+                tableviewborrowers.getItems().addAll(borrowers);
                 tableviewborrowers.setVisible(true);
                 
             }
-//            }catch(NumberFormatException e){
-//          alert = new Alert(Alert.AlertType.WARNING, "Enter valid id book that you want to seach it", ButtonType.OK);
-//          alert.show();
         } catch (Exception e) {
             
             alert = new Alert(Alert.AlertType.ERROR, "Enter valid id borrower that you want to seach it before pressing the Search button", ButtonType.PREVIOUS);
@@ -373,6 +371,7 @@ public class ManagementBorrowersController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.setTitle("Select Operation");
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

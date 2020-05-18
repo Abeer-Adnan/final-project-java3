@@ -51,7 +51,7 @@ public class books {
 
     @Override
     public String toString() {
-return String.format("%-5s %-10s %-30s ", Id, Name, Description);  
+return String.format("%-10s %-20s %-30s ", Id, Name, Description);  
     }
 
      public int compareTo(books b) {

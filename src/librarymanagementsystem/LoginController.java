@@ -35,7 +35,7 @@ import javax.xml.bind.DatatypeConverter;
  * @author rant
  */
 public class LoginController implements Initializable {
-
+    
     @FXML
     private JFXTextField textfeildUserName;
     @FXML
@@ -52,22 +52,20 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection
-            = DriverManager.
-            getConnection("jdbc:mysql://127.0.0.1:3306/LibraryManagement?serverTimezone=UTC",
-                          "root", "");
+                    = DriverManager.
+                            getConnection("jdbc:mysql://127.0.0.1:3306/LibraryManagement?serverTimezone=UTC",
+                                    "root", "");
             this.statement = connection.createStatement();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
+    
     @FXML
     private void bttnLoginHandle(ActionEvent event) throws Exception {
-        // String sqlname = "Select Name from users Where Id = 1";
-        // String sqlpass = "Select Password from users Where Id = 1";
         ResultSet rs = this.statement.executeQuery("Select * from users Where Id = 1");
         String sqlname = "";
         String sqlpass = "";
@@ -75,8 +73,6 @@ public class LoginController implements Initializable {
             sqlname = rs.getString("Name");
             sqlpass = rs.getString("Password");
         }
-        // ResultSet  this.statement.executeQuery("Select * from users Where Id = 1").getString("password");
-
         if (textfeildUserName.getText().isEmpty()) {
             alert = new Alert(Alert.AlertType.WARNING, "The Username Feild Is Empty", ButtonType.CANCEL);
             alert.setHeaderText("Be attention");
@@ -95,6 +91,7 @@ public class LoginController implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(new Scene(p));
                     stage.setTitle("Select Operation");
+                    stage.setResizable(false);
                     stage.show();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -105,7 +102,7 @@ public class LoginController implements Initializable {
             }
         }
     }
-
+    
     private String hashPassword(String pa) throws NoSuchAlgorithmException {
         //String password = "1882000";
         MessageDigest md = MessageDigest.getInstance("MD5");

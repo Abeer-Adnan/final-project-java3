@@ -1,9 +1,31 @@
-Add new Book 88    ee         ee                             
-Add new Book 85    se         d	                             
-xxxxxxxxxxxxxxxxxxxxAdd new Book 5858  e          ee                             
-xxxxxxxxxxxxxxxxxxxxUpdating to 555   nfjrjjrjr  wdfbjdfhs                      
-Added Borrower : borrowers{Id=55, FirstName=Sara, LastName=Tahseen, Mobile=058411332, Email=saratahseen@gmail.com, Address=Hamad, Gender=Female}
-Added Borrower : 854   Sara          Tahseen       058411332  saratahseen@gmail.com Hamad                Female    
-Update borrowers Set FirstName='Sara',FirstName='Sara',LastName='ytytytyty',Mobile='058411332',Email='saratahseen@gmail.com',Address='Hamad',Gender='Female'Where Id=55
-xxxxxxxxxxxxxxxxxxxxAdd new Book 586   English    English language               
-Updating to 585   rreeww     sfd                            
+                           
+*************
+Added new Book 
+ 58586 e          ee                             
+Updating to 
+ 5858  ekkk       ee                             
+Deleted book 
+ 5858  ekkk       ee                             
+********************** 
+Added new Book 
+ 585865 e          ee                             
+Updating book 
+ 58586 e;;;       ee                             
+Deleted book 
+ 58586 e;;;       ee                             
+Search book 
+ null  null       null                           
+********************** 
+Added Borrower : 
+ 8542  Sara          Tahseen       058411332  saratahseen@gmail.com Hamad                Female    
+Deleted Borrower : 
+854   Sara          Tahseen       058411332  saratahseen@gmail.com Hamad                Female    
+Update Borrower : 
+854   Saraaa        Tahseen       058411332  saratahseen@gmail.com Hamad                Female    
+Search Borrower : 
+null  null          null          null       null                 null                 null      
+Added information about Borrowers and books : 
+ 5     5     2-2-222              6-6-333             
+********************** 
+Search for the book with the Id : 
+ 1

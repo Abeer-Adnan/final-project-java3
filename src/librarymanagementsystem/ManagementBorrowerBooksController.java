@@ -15,6 +15,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -92,7 +93,6 @@ public class ManagementBorrowerBooksController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -113,6 +113,18 @@ public class ManagementBorrowerBooksController implements Initializable {
         tcBookId1.setCellValueFactory(new PropertyValueFactory("Id"));
         //for tabel borrower id
         tcBorrowerId1.setCellValueFactory(new PropertyValueFactory("Id"));
+        try {
+            showBookId();
+            showBorrowerId();
+        } catch (SQLException ex) {
+            ex.printStackTrace();;
+        }
+        try {
+            p = new PrintWriter(new FileWriter(new File("src/librarymanagementsystem/out.txt"), true));
+            p.print("********************** \n");
+        } catch (IOException ex) {
+            Logger.getLogger(ManagementBorrowersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         tableviewborrbook1.getSelectionModel().selectedItemProperty().addListener(
                 event -> viewSelectedBook());
@@ -142,9 +154,27 @@ public class ManagementBorrowerBooksController implements Initializable {
         }
     }
 
-//    private void view(){
-//    statement.executeQuery("select id from ")
-//    }
+    private void showBookId() throws SQLException {
+        ResultSet resultset = this.statement.executeQuery("Select Id From books");
+        tableviewborrbook1.getItems().clear();
+        while (resultset.next()) {
+            books book = new books();
+            book.setId(resultset.getInt("Id"));
+            tableviewborrbook1.getItems().add(book);
+
+        }
+    }
+
+    private void showBorrowerId() throws SQLException {
+        ResultSet resultset = this.statement.executeQuery("Select Id From borrowers");
+        tableviewborrbook2.getItems().clear();
+        while (resultset.next()) {
+            borrowers borrower = new borrowers();
+            borrower.setId(resultset.getInt("Id"));
+            tableviewborrbook2.getItems().add(borrower);
+        }
+    }
+
     @FXML
     private void bttnClearHandle(ActionEvent event) {
         textfeildbookId.setText("");
@@ -185,13 +215,11 @@ public class ManagementBorrowerBooksController implements Initializable {
                 String sql = "Insert Into borrower_books values(" + BookId + "," + BorrowerId + ",'"
                         + BorrowersDate + "','" + ReturnDate + "')";
                 this.statement.executeUpdate(sql);
-
-                p.println("");
+                p.println("Added information about Borrowers and books : \n " + new borrower_books(BookId, BookId, BorrowersDate, ReturnDate));
                 p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
                 alert.show();
-                //   bttnViewHandle(event);
             } else {
                 alert = new Alert(Alert.AlertType.INFORMATION, "Add operation is faild", ButtonType.CANCEL);
                 alert.setHeaderText("Sorry!");
@@ -224,6 +252,7 @@ public class ManagementBorrowerBooksController implements Initializable {
             tableviewborrbook.getItems().add(borrowerbooks);
 
         }
+        p.flush();
     }
 
     @FXML
@@ -234,6 +263,7 @@ public class ManagementBorrowerBooksController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.setTitle("Select Operation");
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -60,8 +60,7 @@ public class borrower_books {
 
     @Override
     public String toString() {
-        //return "borrower_books{" + "Book_id=" + Book_id + ", Borrower_id=" + Borrower_id + ", borrowers_date=" + borrowers_date + ", Return_date=" + Return_date + '}';
-   return String.format("%-5s %-5s %-20s %-20s", Book_id, Borrower_id, borrowers_date,Return_date);
+   return String.format("%-10s %-10s %-25s %-25s", Book_id, Borrower_id, borrowers_date,Return_date);
     }
      public int compareTo(borrower_books brb) {
        return (int)-( this.Book_id-brb.Book_id);

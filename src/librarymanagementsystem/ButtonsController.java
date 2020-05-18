@@ -39,56 +39,58 @@ public class ButtonsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void bttnBookHandle(ActionEvent event) {
-         try {
+        try {
             FXMLLoader fxmll = new FXMLLoader();
             Parent p = fxmll.load(getClass().getResource("ManagementBooks.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.setTitle("Management Books");
-            
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-          
+
     }
 
     @FXML
     private void bttnBorrowersHandle(ActionEvent event) {
-         try {
+        try {
             FXMLLoader fxmll = new FXMLLoader(getClass().getResource("Management Borrowers.fxml"));
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.setTitle("Management Borrowers");
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-           
-            
+
         }
     }
 
     @FXML
     private void bttnborrowerbookHandle(ActionEvent event) {
-         try {
+        try {
             FXMLLoader fxmll = new FXMLLoader(getClass().getResource("Management borrower books.fxml"));
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.setTitle("Management borrower books");
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-      @FXML
+
+    @FXML
     void bttnExitHandle(ActionEvent event) {
-       System.exit(0);
+        System.exit(0);
     }
-    
+
 }

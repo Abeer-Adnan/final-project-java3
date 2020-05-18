@@ -35,6 +35,7 @@ public class LibraryManagementSystem extends Application{
        
         primaryStage.setTitle(" Library Management System desktop application ");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();   
     }
     

@@ -94,6 +94,7 @@ public class LoginController implements Initializable {
                     Parent p = fxmll.load();
                     Stage stage = new Stage();
                     stage.setScene(new Scene(p));
+                    stage.setTitle("Select Operation");
                     stage.show();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -86,22 +86,23 @@ public class ManagementBorrowersController implements Initializable {
     private JFXButton bttnSearch;
     @FXML
     private JFXButton bttnBack;
-    
+
     Statement statement;
     Alert alert;
-        /**
+
+    /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-               try {
-           
+        try {
+
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection =
-               DriverManager.
-                getConnection("jdbc:mysql://127.0.0.1:3306/LibraryManagement?serverTimezone=UTC",
-                        "root", "");
+            Connection connection
+                    = DriverManager.
+                            getConnection("jdbc:mysql://127.0.0.1:3306/LibraryManagement?serverTimezone=UTC",
+                                    "root", "");
             this.statement = connection.createStatement();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -113,13 +114,14 @@ public class ManagementBorrowersController implements Initializable {
         tcEmail.setCellValueFactory(new PropertyValueFactory("Email"));
         tcAddress.setCellValueFactory(new PropertyValueFactory("Address"));
         tcGender.setCellValueFactory(new PropertyValueFactory("Gender"));
-        
+
         tableviewborrowers.getSelectionModel().selectedItemProperty().addListener(
-                event-> viewSelectedBorrowers() );
-        
-    }    
-     private void viewSelectedBorrowers() {
-         tableviewborrowers.setVisible(true);
+                event -> viewSelectedBorrowers());
+
+    }
+
+    private void viewSelectedBorrowers() {
+        tableviewborrowers.setVisible(true);
         borrowers borrowers = tableviewborrowers.getSelectionModel().getSelectedItem();
         if (borrowers != null) {
             textfeildID.setText(String.valueOf(borrowers.getId()));
@@ -128,58 +130,66 @@ public class ManagementBorrowersController implements Initializable {
             textfeildMobile.setText(borrowers.getMobile());
             textfeildEmail.setText(borrowers.getEmail());
             textfeildAddress.setText(borrowers.getAddress());
-           // gender.selectToggle(borrowers.getGender());
+            // gender.selectToggle(borrowers.getGender());
+
             gender.setUserData(borrowers.getGender());
-            
-            
-           
+//            System.out.println((borrowers.getGender()));
+//            System.out.println(gender.getUserData());
+            if (gender.getUserData().equals("Male")) {
+                bttnMale.setSelected(true);
+            }else
+            {
+                bttnFemale.setSelected(true);
+            }
+
         }
 
-    }  
+    }
 
     @FXML
-    private void bttnAdd(ActionEvent event) throws Exception{
-        try{
-        Integer Id = Integer.parseInt(textfeildID.getText());
-        String FirstName = textfeildFirstName.getText();
-        String LastName = textfeildLastName.getText();
-        String Mobile = textfeildMobile.getText();
-        String Email = textfeildEmail.getText();
-        String Address = textfeildAddress.getText();
-        String gender = "";
-        if(bttnMale.isSelected()){
-            gender+=bttnMale.getText();
-        } if(bttnFemale.isSelected()){
-             gender+=bttnFemale.getText();
-        }
-        Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add ?").showAndWait();
-                if (ButtonType.OK == confirm.get()){
-        
-        String sql = "Insert Into borrowers values(" + Id + ",'" + FirstName + "','"
-                + LastName+"','"+Mobile+"','"+Email+"','"+Address+"','"+gender + "')";
-        this.statement.executeUpdate(sql);
-        alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
-         alert.setHeaderText("Great!");  
-        alert.show();
-   }else{
-     alert = new Alert(Alert.AlertType.INFORMATION, "Add operation is faild", ButtonType.CANCEL);
-         alert.setHeaderText("Sorry!");  
-        alert.show();
-    }}catch(NumberFormatException e){
+    private void bttnAdd(ActionEvent event) throws Exception {
+        try {
+            Integer Id = Integer.parseInt(textfeildID.getText());
+            String FirstName = textfeildFirstName.getText();
+            String LastName = textfeildLastName.getText();
+            String Mobile = textfeildMobile.getText();
+            String Email = textfeildEmail.getText();
+            String Address = textfeildAddress.getText();
+            String genderText;
+            if (bttnMale.isSelected()) {
+                genderText = bttnMale.getText();
+            }
+            if (bttnFemale.isSelected()) {
+                genderText = bttnFemale.getText();
+            }
+            Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add ?").showAndWait();
+            if (ButtonType.OK == confirm.get()) {
+
+                String sql = "Insert Into borrowers values(" + Id + ",'" + FirstName + "','"
+                        + LastName + "','" + Mobile + "','" + Email + "','" + Address + "','" + gender + "')";
+                this.statement.executeUpdate(sql);
+                alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
+                alert.setHeaderText("Great!");
+                alert.show();
+            } else {
+                alert = new Alert(Alert.AlertType.INFORMATION, "Add operation is faild", ButtonType.CANCEL);
+                alert.setHeaderText("Sorry!");
+                alert.show();
+            }
+        } catch (NumberFormatException e) {
             alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type before pressing the Add button", ButtonType.OK);
-          alert.show();
-          }
-          
-        catch(Exception e ){
-             alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
-          alert.show();
-        
-        } }
+            alert.show();
+        } catch (Exception e) {
+            alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
+            alert.show();
+
+        }
+    }
 
     @FXML
-    private void bttnViewHandle(ActionEvent event) throws Exception{
-         tableviewborrowers.setVisible(true);
-         ResultSet resultset = this.statement.executeQuery("Select * From borrowers");
+    private void bttnViewHandle(ActionEvent event) throws Exception {
+        tableviewborrowers.setVisible(true);
+        ResultSet resultset = this.statement.executeQuery("Select * From borrowers");
         tableviewborrowers.getItems().clear();
         while (resultset.next()) {
             borrowers borrowers = new borrowers();
@@ -191,51 +201,50 @@ public class ManagementBorrowersController implements Initializable {
             borrowers.setAddress(resultset.getString("Address"));
             borrowers.setGender(resultset.getString("Gender"));
             tableviewborrowers.getItems().add(borrowers);
-            
-            
+
         }
     }
 
     @FXML
-    private void bttnUpdateHandle(ActionEvent event) throws Exception{
-        try{
-        Integer Id = Integer.parseInt(textfeildID.getText());
-        String FirstName = textfeildFirstName.getText();
-        String LastName = textfeildLastName.getText();
-        String Mobile = textfeildMobile.getText();
-        String Email = textfeildEmail.getText();
-        String Address = textfeildAddress.getText();
-        String gender = "";
-        if(bttnMale.isSelected()){
-            gender+=bttnMale.getText();
-        } if(bttnFemale.isSelected()){
-             gender+=bttnFemale.getText();
-        }
-       // String Gender = textfeild.getText();
-       Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Update ?").showAndWait();
-                if (ButtonType.OK == confirm.get()){
-         String sql = "Update borrowers Set FirstName='" + FirstName + "',FirstName='"
-                + FirstName +"',LastName='"+LastName+"',Mobile='"+Mobile+
-                 "',Email='"+Email+"',Address='"+Address+"',Gender='"+gender+"'Where Id=" + Id;
-        this.statement.executeUpdate(sql);
-        
-        alert = new Alert(Alert.AlertType.INFORMATION, "Update operation completed successfully", ButtonType.CANCEL);
-         alert.setHeaderText("Great!");  
-        alert.show();
-        
-                }else{
-                    alert = new Alert(Alert.AlertType.INFORMATION, "Update operation is faild", ButtonType.CANCEL);
-         alert.setHeaderText("Sorry!");  
-        alert.show();
-                }
-                }catch(NumberFormatException e){
-          alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type or choose the record that you want to update from the table before pressing the update button", ButtonType.OK);
-          alert.show();
-          
-          
-        }catch(Exception e){
-          alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
-          alert.show();
+    private void bttnUpdateHandle(ActionEvent event) throws Exception {
+        try {
+            Integer Id = Integer.parseInt(textfeildID.getText());
+            String FirstName = textfeildFirstName.getText();
+            String LastName = textfeildLastName.getText();
+            String Mobile = textfeildMobile.getText();
+            String Email = textfeildEmail.getText();
+            String Address = textfeildAddress.getText();
+            String gender = "";
+            if (bttnMale.isSelected()) {
+                gender += bttnMale.getText();
+            }
+            if (bttnFemale.isSelected()) {
+                gender += bttnFemale.getText();
+            }
+            // String Gender = textfeild.getText();
+            Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Update ?").showAndWait();
+            if (ButtonType.OK == confirm.get()) {
+                String sql = "Update borrowers Set FirstName='" + FirstName + "',FirstName='"
+                        + FirstName + "',LastName='" + LastName + "',Mobile='" + Mobile
+                        + "',Email='" + Email + "',Address='" + Address + "',Gender='" + gender + "'Where Id=" + Id;
+                this.statement.executeUpdate(sql);
+
+                alert = new Alert(Alert.AlertType.INFORMATION, "Update operation completed successfully", ButtonType.CANCEL);
+                alert.setHeaderText("Great!");
+                alert.show();
+
+            } else {
+                alert = new Alert(Alert.AlertType.INFORMATION, "Update operation is faild", ButtonType.CANCEL);
+                alert.setHeaderText("Sorry!");
+                alert.show();
+            }
+        } catch (NumberFormatException e) {
+            alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type or choose the record that you want to update from the table before pressing the update button", ButtonType.OK);
+            alert.show();
+
+        } catch (Exception e) {
+            alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
+            alert.show();
         }
     }
 
@@ -254,89 +263,90 @@ public class ManagementBorrowersController implements Initializable {
     }
 
     @FXML
-    private void bttnDeleteHandle(ActionEvent event)throws Exception{
-        try{
-        Integer Id = Integer.parseInt(textfeildID.getText());
-        String FirstName = textfeildFirstName.getText();
-        String LastName = textfeildLastName.getText();
-        String Mobile = textfeildMobile.getText();
-        String Email = textfeildEmail.getText();
-        String Address = textfeildAddress.getText();
-        //String Gender = textfeild.getText();
-        String gender = "";
-        if(bttnMale.isSelected()){
-            gender+=bttnMale.getText();
-        }if(bttnFemale.isSelected()){
-             gender+=bttnFemale.getText();
-        }
-        Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Delete ?").showAndWait();
-                if (ButtonType.OK == confirm.get()){
-        String sql = "Delete From borrowers Where Id=" + Id;
-        this.statement.executeUpdate(sql);
-        alert = new Alert(Alert.AlertType.INFORMATION, "Delete operation completed successfully", ButtonType.CANCEL);
-         alert.setHeaderText("Great!");  
-        alert.show();
-                }else{
-                    alert = new Alert(Alert.AlertType.INFORMATION, "Delete operation is faild", ButtonType.CANCEL);
-         alert.setHeaderText("Sorry!");  
-        alert.show(); 
-                }
-                }catch(NumberFormatException e){
-         alert = new Alert(Alert.AlertType.WARNING,
-           "Enter valid data type or choose the record that you want to Delete from the table before pressing the Delete button", ButtonType.OK);
-          alert.show();
-          
-          
-        }catch(Exception e){
-          alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
-          alert.show();
+    private void bttnDeleteHandle(ActionEvent event) throws Exception {
+        try {
+            Integer Id = Integer.parseInt(textfeildID.getText());
+            String FirstName = textfeildFirstName.getText();
+            String LastName = textfeildLastName.getText();
+            String Mobile = textfeildMobile.getText();
+            String Email = textfeildEmail.getText();
+            String Address = textfeildAddress.getText();
+            //String Gender = textfeild.getText();
+            String gender = "";
+            if (bttnMale.isSelected()) {
+                gender += bttnMale.getText();
+            }
+            if (bttnFemale.isSelected()) {
+                gender += bttnFemale.getText();
+            }
+            Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Delete ?").showAndWait();
+            if (ButtonType.OK == confirm.get()) {
+                String sql = "Delete From borrowers Where Id=" + Id;
+                this.statement.executeUpdate(sql);
+                alert = new Alert(Alert.AlertType.INFORMATION, "Delete operation completed successfully", ButtonType.CANCEL);
+                alert.setHeaderText("Great!");
+                alert.show();
+            } else {
+                alert = new Alert(Alert.AlertType.INFORMATION, "Delete operation is faild", ButtonType.CANCEL);
+                alert.setHeaderText("Sorry!");
+                alert.show();
+            }
+        } catch (NumberFormatException e) {
+            alert = new Alert(Alert.AlertType.WARNING,
+                    "Enter valid data type or choose the record that you want to Delete from the table before pressing the Delete button", ButtonType.OK);
+            alert.show();
+
+        } catch (Exception e) {
+            alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
+            alert.show();
         }
     }
 
     @FXML
     private void bttnSearchHandle(ActionEvent event) {
-          try{
-              alert = new Alert(Alert.AlertType.INFORMATION, "Enter the id borrowers that you want to seach it ", ButtonType.OK);
-              alert.show();
-         
-         Integer Id = Integer.parseInt(textfeildID.getText());
-         ResultSet resultset = this.statement.executeQuery("Select * From borrowers Where Id=" + Id);
-        tableviewborrowers.getItems().clear();
-       while (resultset.next()) {
-            borrowers borrowers = new borrowers();
-            borrowers.setId(resultset.getInt("Id"));
-            borrowers.setFirstName(resultset.getString("FirstName"));
-            borrowers.setLastName(resultset.getString("LastName"));
-            borrowers.setMobile(resultset.getString("Mobile"));
-            borrowers.setEmail(resultset.getString("Email"));
-            borrowers.setAddress(resultset.getString("Address"));
-            borrowers.setGender(resultset.getString("Gender"));
-            tableviewborrowers.getItems().add(borrowers);
-            tableviewborrowers.setVisible(true);
-            
-        }
+        try {
+//              alert = new Alert(Alert.AlertType.INFORMATION, "Enter the id borrowers that you want to seach it ", ButtonType.OK);
+//              alert.show();
+
+            Integer Id = Integer.parseInt(textfeildID.getText());
+            ResultSet resultset = this.statement.executeQuery("Select * From borrowers Where Id=" + Id);
+            tableviewborrowers.getItems().clear();
+            while (resultset.next()) {
+                borrowers borrowers = new borrowers();
+                borrowers.setId(resultset.getInt("Id"));
+                borrowers.setFirstName(resultset.getString("FirstName"));
+                borrowers.setLastName(resultset.getString("LastName"));
+                borrowers.setMobile(resultset.getString("Mobile"));
+                borrowers.setEmail(resultset.getString("Email"));
+                borrowers.setAddress(resultset.getString("Address"));
+                borrowers.setGender(resultset.getString("Gender"));
+                tableviewborrowers.getItems().add(borrowers);
+                tableviewborrowers.setVisible(true);
+
+            }
 //            }catch(NumberFormatException e){
 //          alert = new Alert(Alert.AlertType.WARNING, "Enter valid id book that you want to seach it", ButtonType.OK);
 //          alert.show();
-            }catch(Exception e){
-                
-              alert = new Alert(Alert.AlertType.ERROR, "Enter valid id borrower that you want to seach it", ButtonType.PREVIOUS);
-              alert.setTitle("Somthing Error");
-              alert.show();
-            }
+        } catch (Exception e) {
+
+            alert = new Alert(Alert.AlertType.ERROR, "Enter valid id borrower that you want to seach it before pressing the Search button", ButtonType.PREVIOUS);
+            alert.setTitle("Somthing Error");
+            alert.show();
+        }
     }
 
     @FXML
-    private void bttnBackHandle(ActionEvent event)throws Exception{
-                  try {
+    private void bttnBackHandle(ActionEvent event) throws Exception {
+        try {
             FXMLLoader fxmll = new FXMLLoader(getClass().getResource("Buttons.fxml"));
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
+            stage.setTitle("Select Operation");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
 }

@@ -48,6 +48,7 @@ public class ButtonsController implements Initializable {
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
+            stage.setTitle("Management Books");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,6 +63,7 @@ public class ButtonsController implements Initializable {
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
+            stage.setTitle("Management Borrowers");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,6 +79,7 @@ public class ButtonsController implements Initializable {
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
+            stage.setTitle("Management borrower books");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -60,6 +60,17 @@ public class ManagementBorrowerBooksController implements Initializable {
     private TableColumn<borrower_books, String> tcReturnDate;
     @FXML
     private JFXButton bttnBack;
+    @FXML
+    private TableView<books> tableviewborrbook1;
+
+    @FXML
+    private TableColumn<books, Integer> tcBookId1;
+
+    @FXML
+    private TableView<borrowers> tableviewborrbook2;
+
+    @FXML
+    private TableColumn<borrowers, Integer> tcBorrowerId1;
     
     Statement statement;
     Alert alert;
@@ -85,22 +96,33 @@ public class ManagementBorrowerBooksController implements Initializable {
         tcBorrowersDate.setCellValueFactory(new PropertyValueFactory("borrowers_date"));
         tcReturnDate.setCellValueFactory(new PropertyValueFactory("Return_date"));
         
+        //for tabel bookid
+        tcBookId1.setCellValueFactory(new PropertyValueFactory("Id"));
+        //for tabel borrower id
+        tcBorrowerId1.setCellValueFactory(new PropertyValueFactory("Id"));
         
-      /*  tableviewborrbook.getSelectionModel().selectedItemProperty().addListener(
-                event-> viewSelectedBorrowerBook() );*/
         
-    } /*   
-     private void viewSelectedBorrowerBook() {
-         tableviewborrbook.setVisible(true);
-        borrower_books borrowerbooks = tableviewborrbook.getSelectionModel().getSelectedItem();
-        if (borrowerbooks != null) {
-            textfeildbookId.setText(String.valueOf(borrowerbooks.getBook_id()));
-            textfeildborrowerId.setText(String.valueOf(borrowerbooks.getBorrower_id()));
-            textfeildborrowerDate.setText(borrowerbooks.getBorrowers_date());
-            textfeildreturnDate.setText(borrowerbooks.getReturn_date());
+        tableviewborrbook1.getSelectionModel().selectedItemProperty().addListener(
+                event-> viewSelectedBook() );
+        tableviewborrbook2.getSelectionModel().selectedItemProperty().addListener(
+                event-> viewSelectedBoorower() );
+    }    
+     private void viewSelectedBoorower() {
+       
+        borrowers borrowerid = tableviewborrbook2.getSelectionModel().getSelectedItem();
+        if (borrowerid != null) {
+            textfeildbookId.setText(String.valueOf(borrowerid.getId()));
+        } 
+        }
+        private void viewSelectedBook(){
+       
+        books bookid = tableviewborrbook1.getSelectionModel().getSelectedItem();
+        if (bookid != null) {
+            textfeildbookId.setText(String.valueOf(bookid.getId()));
+            
             
         }
-    }*/    
+    }   
 
     @FXML
     private void bttnClearHandle(ActionEvent event) {
@@ -114,6 +136,9 @@ public class ManagementBorrowerBooksController implements Initializable {
 
     @FXML
     private void bttnAddHandle(ActionEvent event)throws Exception{
+        tableviewborrbook1.setVisible(true);
+        tableviewborrbook2.setVisible(true);
+        tableviewborrbook.setVisible(false);
         try{
         Integer BookId = Integer.parseInt(textfeildbookId.getText());
         Integer BorrowerId = Integer.parseInt(textfeildborrowerId.getText());
@@ -138,7 +163,7 @@ public class ManagementBorrowerBooksController implements Initializable {
         alert.show();
                 }
         }catch(NumberFormatException e){
-            alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type before pressing the Add button", ButtonType.OK);
+            alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type OR,choose the record from the table below before pressing the Add button", ButtonType.OK);
           alert.show();
           }
           
@@ -151,6 +176,8 @@ public class ManagementBorrowerBooksController implements Initializable {
 
     @FXML
     private void bttnViewHandle(ActionEvent event)throws Exception{
+        tableviewborrbook1.setVisible(false);
+        tableviewborrbook2.setVisible(false);
         tableviewborrbook.setVisible(true);
          ResultSet resultset = this.statement.executeQuery("Select * From borrower_books");
         tableviewborrbook.getItems().clear();
@@ -174,6 +201,7 @@ public class ManagementBorrowerBooksController implements Initializable {
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
+            stage.setTitle("Select Operation");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

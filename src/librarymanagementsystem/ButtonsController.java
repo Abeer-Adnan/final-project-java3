@@ -44,11 +44,12 @@ public class ButtonsController implements Initializable {
     @FXML
     private void bttnBookHandle(ActionEvent event) {
          try {
-            FXMLLoader fxmll = new FXMLLoader(getClass().getResource("Management Books.fxml"));
-            Parent p = fxmll.load();
+            FXMLLoader fxmll = new FXMLLoader();
+            Parent p = fxmll.load(getClass().getResource("ManagementBooks.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.setTitle("Management Books");
+            
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

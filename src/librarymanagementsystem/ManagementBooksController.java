@@ -8,14 +8,24 @@ package librarymanagementsystem;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,12 +78,25 @@ public class ManagementBooksController implements Initializable {
 
     Statement statement;
     Alert alert;
+    PrintWriter p;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            //        FileWriter f=null;
+//        try {
+//            f = ;
+//        } catch (IOException ex) {
+//            Logger.getLogger(ManagementBooksController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+            p = new PrintWriter(new FileWriter(new File("src/librarymanagementsystem/out.txt"), true));
+            p.print("*************");
+        } catch (IOException ex) {
+            Logger.getLogger(ManagementBooksController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO
         try {
 
@@ -124,10 +147,25 @@ public class ManagementBooksController implements Initializable {
 //        alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add ?", ButtonType.YES);
 //        alert.setHeaderText("Confirmation alert !");
 //        alert.show();
+                books bb = new books(Id, Name, Description);
+                List<books> bblist = new ArrayList<>();
+                bblist.add(bb);
+                tabelviewBook.getItems().setAll(
+                        tabelviewBook.getItems().stream().sorted(Comparator.comparing(books::getId).reversed())
+                        .sorted(new Comparator<books>() {
+                            @Override
+                            public int compare(books b1, books b2) {
+                                return -b1.compareTo(b2);
+                            }
+                        })
+                        .collect(Collectors.toList()
+                        ));
+
                 String sql = "Insert Into books values(" + Id + ",'" + Name + "','"
                         + Description + "')";
                 this.statement.executeUpdate(sql);
-
+                p.println("Add new Book " + new books(Id, Name, Description));
+                p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
                 alert.show();
@@ -177,7 +215,8 @@ public class ManagementBooksController implements Initializable {
                 String sql = "Update books Set Name='" + Name + "',Description='"
                         + Description + "'Where Id=" + Id;
                 this.statement.executeUpdate(sql);
-
+                p.println("Updating to " + new books(Id, Name, Description));
+                p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Update operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
                 alert.show();
@@ -218,17 +257,17 @@ public class ManagementBooksController implements Initializable {
 //            alert = new Alert(Alert.AlertType.INFORMATION, "Enter the id book that you want to seach it ", ButtonType.OK);
 //            Optional<ButtonType> isOk = alert.showAndWait();
 //            if (isOk.get() == ButtonType.OK ) {
-                Integer Id = Integer.parseInt(textfeildID.getText());
-                ResultSet resultset = this.statement.executeQuery("Select * From books Where Id=" + Id);
-                tabelviewBook.getItems().clear();
-                while (resultset.next()) {
-                    books book = new books();
-                    book.setId(resultset.getInt("Id"));
-                    book.setName(resultset.getString("Name"));
-                    book.setDescription(resultset.getString("Description"));
-                    tabelviewBook.getItems().addAll(book);
-                    tabelviewBook.setVisible(true);
-                }
+            Integer Id = Integer.parseInt(textfeildID.getText());
+            ResultSet resultset = this.statement.executeQuery("Select * From books Where Id=" + Id);
+            tabelviewBook.getItems().clear();
+            while (resultset.next()) {
+                books book = new books();
+                book.setId(resultset.getInt("Id"));
+                book.setName(resultset.getString("Name"));
+                book.setDescription(resultset.getString("Description"));
+                tabelviewBook.getItems().addAll(book);
+                tabelviewBook.setVisible(true);
+            }
 //            }catch(NumberFormatException e){
 //          alert = new Alert(Alert.AlertType.WARNING, "Enter valid id book that you want to seach it", ButtonType.OK);
 //          alert.show();

@@ -7,15 +7,23 @@ package librarymanagementsystem;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +45,7 @@ import javafx.stage.Stage;
  * @author rant
  */
 public class ManagementBorrowersController implements Initializable {
-
+    
     @FXML
     private TableView<borrowers> tableviewborrowers;
     @FXML
@@ -86,9 +94,10 @@ public class ManagementBorrowersController implements Initializable {
     private JFXButton bttnSearch;
     @FXML
     private JFXButton bttnBack;
-
+    
     Statement statement;
     Alert alert;
+    PrintWriter p;
 
     /**
      * Initializes the controller class.
@@ -97,7 +106,7 @@ public class ManagementBorrowersController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         try {
-
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection
                     = DriverManager.
@@ -114,12 +123,17 @@ public class ManagementBorrowersController implements Initializable {
         tcEmail.setCellValueFactory(new PropertyValueFactory("Email"));
         tcAddress.setCellValueFactory(new PropertyValueFactory("Address"));
         tcGender.setCellValueFactory(new PropertyValueFactory("Gender"));
-
+        
         tableviewborrowers.getSelectionModel().selectedItemProperty().addListener(
                 event -> viewSelectedBorrowers());
-
+        
+        try {
+            p = new PrintWriter(new FileWriter(new File("src/librarymanagementsystem/out.txt"), true));
+        } catch (IOException ex) {
+            Logger.getLogger(ManagementBorrowersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
+    
     private void viewSelectedBorrowers() {
         tableviewborrowers.setVisible(true);
         borrowers borrowers = tableviewborrowers.getSelectionModel().getSelectedItem();
@@ -137,15 +151,14 @@ public class ManagementBorrowersController implements Initializable {
 //            System.out.println(gender.getUserData());
             if (gender.getUserData().equals("Male")) {
                 bttnMale.setSelected(true);
-            }else
-            {
+            } else {
                 bttnFemale.setSelected(true);
             }
-
+            
         }
-
+        
     }
-
+    
     @FXML
     private void bttnAdd(ActionEvent event) throws Exception {
         try {
@@ -155,19 +168,34 @@ public class ManagementBorrowersController implements Initializable {
             String Mobile = textfeildMobile.getText();
             String Email = textfeildEmail.getText();
             String Address = textfeildAddress.getText();
-            String genderText;
+            String genderText="";
             if (bttnMale.isSelected()) {
-                genderText = bttnMale.getText();
+                genderText += bttnMale.getText();
             }
             if (bttnFemale.isSelected()) {
-                genderText = bttnFemale.getText();
+                genderText += bttnFemale.getText();
             }
             Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add ?").showAndWait();
             if (ButtonType.OK == confirm.get()) {
-
+                
+                borrowers bb = new borrowers(Id, FirstName, LastName, Mobile, Email, Address, genderText);
+                List<borrowers> bblist = new ArrayList<>();
+                bblist.add(bb);
+                tableviewborrowers.getItems().setAll(tableviewborrowers.getItems().stream().sorted(Comparator.comparing(borrowers::getId).reversed())
+                        .sorted(new Comparator<borrowers>() {
+                            @Override
+                            public int compare(borrowers t, borrowers t1) {
+                                return -t.compareTo(t1);
+                            }
+                        })
+                        .collect(Collectors.toList()
+                        ));
+                
                 String sql = "Insert Into borrowers values(" + Id + ",'" + FirstName + "','"
-                        + LastName + "','" + Mobile + "','" + Email + "','" + Address + "','" + gender + "')";
+                        + LastName + "','" + Mobile + "','" + Email + "','" + Address + "','" + genderText + "')";
                 this.statement.executeUpdate(sql);
+                p.println("Added Borrower : " + new borrowers(Id, FirstName, LastName, Mobile, Email, Address, genderText));
+                p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Add operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
                 alert.show();
@@ -180,12 +208,13 @@ public class ManagementBorrowersController implements Initializable {
             alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type before pressing the Add button", ButtonType.OK);
             alert.show();
         } catch (Exception e) {
+            e.printStackTrace();
             alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
             alert.show();
-
+            
         }
     }
-
+    
     @FXML
     private void bttnViewHandle(ActionEvent event) throws Exception {
         tableviewborrowers.setVisible(true);
@@ -201,10 +230,10 @@ public class ManagementBorrowersController implements Initializable {
             borrowers.setAddress(resultset.getString("Address"));
             borrowers.setGender(resultset.getString("Gender"));
             tableviewborrowers.getItems().add(borrowers);
-
+            
         }
     }
-
+    
     @FXML
     private void bttnUpdateHandle(ActionEvent event) throws Exception {
         try {
@@ -228,11 +257,12 @@ public class ManagementBorrowersController implements Initializable {
                         + FirstName + "',LastName='" + LastName + "',Mobile='" + Mobile
                         + "',Email='" + Email + "',Address='" + Address + "',Gender='" + gender + "'Where Id=" + Id;
                 this.statement.executeUpdate(sql);
-
+                p.println(sql);
+                p.flush();
                 alert = new Alert(Alert.AlertType.INFORMATION, "Update operation completed successfully", ButtonType.CANCEL);
                 alert.setHeaderText("Great!");
                 alert.show();
-
+                
             } else {
                 alert = new Alert(Alert.AlertType.INFORMATION, "Update operation is faild", ButtonType.CANCEL);
                 alert.setHeaderText("Sorry!");
@@ -241,13 +271,13 @@ public class ManagementBorrowersController implements Initializable {
         } catch (NumberFormatException e) {
             alert = new Alert(Alert.AlertType.WARNING, "Enter valid data type or choose the record that you want to update from the table before pressing the update button", ButtonType.OK);
             alert.show();
-
+            
         } catch (Exception e) {
             alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
             alert.show();
         }
     }
-
+    
     @FXML
     private void bttnClearHandle(ActionEvent event) {
         textfeildID.setText("");
@@ -261,7 +291,7 @@ public class ManagementBorrowersController implements Initializable {
         tableviewborrowers.getItems().clear();
         tableviewborrowers.setVisible(false);
     }
-
+    
     @FXML
     private void bttnDeleteHandle(ActionEvent event) throws Exception {
         try {
@@ -295,13 +325,13 @@ public class ManagementBorrowersController implements Initializable {
             alert = new Alert(Alert.AlertType.WARNING,
                     "Enter valid data type or choose the record that you want to Delete from the table before pressing the Delete button", ButtonType.OK);
             alert.show();
-
+            
         } catch (Exception e) {
             alert = new Alert(Alert.AlertType.ERROR, "There is somthing Errorr ,Please try again ", ButtonType.PREVIOUS);
             alert.show();
         }
     }
-
+    
     @FXML
     private void bttnSearchHandle(ActionEvent event) {
         try {
@@ -322,19 +352,19 @@ public class ManagementBorrowersController implements Initializable {
                 borrowers.setGender(resultset.getString("Gender"));
                 tableviewborrowers.getItems().add(borrowers);
                 tableviewborrowers.setVisible(true);
-
+                
             }
 //            }catch(NumberFormatException e){
 //          alert = new Alert(Alert.AlertType.WARNING, "Enter valid id book that you want to seach it", ButtonType.OK);
 //          alert.show();
         } catch (Exception e) {
-
+            
             alert = new Alert(Alert.AlertType.ERROR, "Enter valid id borrower that you want to seach it before pressing the Search button", ButtonType.PREVIOUS);
             alert.setTitle("Somthing Error");
             alert.show();
         }
     }
-
+    
     @FXML
     private void bttnBackHandle(ActionEvent event) throws Exception {
         try {
@@ -348,5 +378,5 @@ public class ManagementBorrowersController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
 }

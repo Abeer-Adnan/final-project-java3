@@ -92,8 +92,12 @@ public class borrowers {
 
     @Override
     public String toString() {
-        return "borrowers{" + "Id=" + Id + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Mobile=" + Mobile + ", Email=" + Email + ", Address=" + Address + ", Gender=" + Gender + '}';
-    }
+      //  return "borrowers{" + "Id=" + Id + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Mobile=" + Mobile + ", Email=" + Email + ", Address=" + Address + ", Gender=" + Gender + '}';
     
+    return String.format("%-5s %-13s %-13s %-10s %-20s %-20s %-10s", Id, FirstName, LastName,Mobile,Email,Address,Gender);
+    }
+     public int compareTo(borrowers t) {
+       return (int)-( this.Id-t.Id);
+    }
     
 }

@@ -51,6 +51,8 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+//        UserName/abeer
+//        PassWord/1882000
         try {
             
             Class.forName("com.mysql.cj.jdbc.Driver");
